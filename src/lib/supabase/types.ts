@@ -32,6 +32,7 @@ export type AdminGuestbookMessage = {
   name: string;
   message: string | null;
   approved: boolean | null;
+  review_status: "pending" | "approved" | "hidden" | null;
   created_at: string | null;
   nickname: string | null;
   avatar_url: string | null;

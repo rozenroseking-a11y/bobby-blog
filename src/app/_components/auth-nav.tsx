@@ -8,6 +8,8 @@ import { isSupabaseConfigured, supabase } from "@/lib/supabase/client";
 import { ensureProfile } from "@/lib/supabase/profile";
 import type { Profile } from "@/lib/supabase/types";
 
+const ADMIN_EMAILS = ["h981411799@126.com", "gg981411799@126.com"];
+
 export function AuthNav() {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -69,6 +71,14 @@ export function AuthNav() {
 
   return (
     <div className="flex items-center gap-2">
+      {user.email && ADMIN_EMAILS.includes(user.email) && (
+        <Link
+          href="/admin"
+          className="rounded-full bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm ring-1 ring-rose-100 transition hover:bg-rose-100 dark:bg-rose-300/10 dark:text-rose-200 dark:ring-rose-300/20"
+        >
+          猫老板后台
+        </Link>
+      )}
       <Link
         href="/account"
         className="flex items-center gap-2 rounded-full bg-orange-50 px-2 py-1 pr-3 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 transition hover:bg-orange-100 dark:bg-orange-300/10 dark:text-orange-200 dark:ring-orange-300/20"
