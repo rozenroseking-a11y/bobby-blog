@@ -25,6 +25,18 @@ export type PublicGuestbookMessage = {
   avatar_url: string | null;
 };
 
+export type AdminGuestbookMessage = {
+  id: number;
+  user_id: string | null;
+  email: string | null;
+  name: string;
+  message: string | null;
+  approved: boolean | null;
+  created_at: string | null;
+  nickname: string | null;
+  avatar_url: string | null;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -72,7 +84,25 @@ export type Database = {
         Relationships: [];
       };
     };
-    Functions: Record<string, never>;
+    Functions: {
+      admin_guestbook_messages: {
+        Args: Record<string, never>;
+        Returns: AdminGuestbookMessage[];
+      };
+      admin_set_guestbook_approved: {
+        Args: {
+          message_id: number;
+          next_approved: boolean;
+        };
+        Returns: undefined;
+      };
+      admin_delete_guestbook_message: {
+        Args: {
+          message_id: number;
+        };
+        Returns: undefined;
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };
