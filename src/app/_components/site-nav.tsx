@@ -3,6 +3,7 @@
 import cn from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AuthNav } from "./auth-nav";
 import { ThemeSwitcher } from "./theme-switcher";
 
 const navItems = [
@@ -51,6 +52,7 @@ export function SiteNav() {
               </Link>
             );
           })}
+          <AuthNav />
           <ThemeSwitcher />
         </nav>
       </div>
