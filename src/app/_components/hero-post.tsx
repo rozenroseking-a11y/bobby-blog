@@ -1,4 +1,5 @@
 import Avatar from "@/app/_components/avatar";
+import { BobbyOfficeWidgets } from "@/app/_components/bobby-office-widgets";
 import CoverImage from "@/app/_components/cover-image";
 import { type Author } from "@/interfaces/author";
 import Link from "next/link";
@@ -24,8 +25,14 @@ export function HeroPost({
   return (
     <section>
       <div className="mb-8 md:mb-16">
-        <CoverImage title={title} src={coverImage} slug={slug} />
+        <CoverImage
+          title={title}
+          src={coverImage}
+          slug={slug}
+          className="md:h-[min(42vw,520px)] md:object-cover"
+        />
       </div>
+      <BobbyOfficeWidgets />
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
           <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
@@ -39,7 +46,7 @@ export function HeroPost({
         </div>
         <div>
           <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-          <Avatar name={author.name} picture={author.picture} />
+          <Avatar name={author.name} />
         </div>
       </div>
     </section>

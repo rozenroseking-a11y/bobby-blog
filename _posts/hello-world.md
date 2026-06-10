@@ -1,19 +1,18 @@
 ---
-title: "Learn How to Pre-render Pages Using Static Generation with Next.js"
-excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus."
-coverImage: "/assets/blog/hello-world/cover.jpg"
-date: "2020-03-16T05:35:07.322Z"
+title: "猫老板的午睡管理制度"
+excerpt: "为提升事务所运营质量，波比老板正式发布午睡管理制度，明确规定阳光地板、软垫和人类安静程度。"
+coverImage: "/bobby/bobby-off-duty.jpg"
+date: "2026-06-08T13:30:00.000Z"
 author:
-  name: Tim Neutkens
-  picture: "/assets/blog/authors/tim.jpeg"
+  name: 😴 午睡管理委员
 ogImage:
-  url: "/assets/blog/hello-world/cover.jpg"
+  url: "/bobby/bobby-off-duty.jpg"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+为了进一步提升波比事务所的工作效率，猫老板近日发布《午睡管理制度》。制度第一条写得非常清楚：午睡不是偷懒，而是高层战略充电。人类不得以“现在才上午十一点”之类的理由提出异议，因为猫的时间表由猫掌握，钟表只负责挂在墙上。
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
+根据新制度，事务所每日设立三个午睡窗口：阳光刚好时、小风吹窗帘时，以及人类开会声音太无聊时。波比可根据现场温度、毯子柔软度和饭后满意度，自主决定是否延长休息。若老板在睡梦中轻轻摆尾，表示系统仍在运行；若整只猫翻成一块松软面包，则代表事务所进入深度节能模式。
 
-## Lorem Ipsum
+制度还对人类行为作出明确要求。经过午睡区时必须降低音量，禁止突然吸猫，禁止用手机贴脸拍照，禁止在老板睡得正香时说“好可爱”。如需提交文件，请放在爪边等待审批。若文件被压住，说明老板正在认真审核；若文件被踢开，说明格式不符合猫界标准。
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+波比强调，充足午睡有助于下午继续开展巡视、蹲门口、监督晚饭等重要工作。事务所全体成员一致认为，该制度虽然主要方便了猫老板，但考虑到老板毛茸茸、很有道理，因此即日起正式执行。

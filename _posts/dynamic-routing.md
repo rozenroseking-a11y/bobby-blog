@@ -1,19 +1,18 @@
 ---
-title: "Dynamic Routing and Static Generation"
-excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus."
-coverImage: "/assets/blog/dynamic-routing/cover.jpg"
-date: "2020-03-16T05:35:07.322Z"
+title: "本月冻干审计报告"
+excerpt: "波比事务所发布本月冻干消耗审计结果：库存下降速度惊人，但猫老板坚持认为这属于必要办公成本。"
+coverImage: "/bobby/bobby-food.jpg"
+date: "2026-06-09T10:00:00.000Z"
 author:
-  name: JJ Kasper
-  picture: "/assets/blog/authors/jj.jpeg"
+  name: 😼 冻干审计官
 ogImage:
-  url: "/assets/blog/dynamic-routing/cover.jpg"
+  url: "/bobby/bobby-food.jpg"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+波比事务所财务部今日发布《本月冻干审计报告》。报告显示，本月冻干消耗量为十二包，其中包括早餐激励两包、午间会议安抚三包、下班前情绪稳定四包，以及“老板路过饭盆时顺便想起来”的特别支出三包。数据一经公布，人类财务专员沉默良久，猫老板则当场坐在报告上，表达高度认可。
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
+审计过程中，波比积极配合，主要配合方式包括闻袋子、拍袋子、盯着袋子，以及在工作人员试图记录时用爪子压住笔。面对“是否存在重复报销”的询问，波比缓慢眨眼一次。根据事务所内部章程，猫老板眨眼可视为高级别批示，因此该项疑问自动结案。
 
-## Lorem Ipsum
+报告还指出，冻干并非普通零食，而是维持事务所高效运转的重要燃料。没有冻干，波比无法完成巡视、监工、晒太阳、午睡质量评估等核心业务。尤其在客厅到书房这段长距离通勤中，冻干补给具有不可替代的战略意义。
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+财务部最后建议下月适度控制预算。波比对此表示理解，并立刻把空袋子推到人类脚边，提醒大家提前补货。事务所认为，本次审计流程规范、结论清晰，唯一遗留问题是：为什么十二包听起来还是不太够。

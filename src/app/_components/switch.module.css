@@ -1,56 +1,54 @@
 .switch {
   all: unset;
-  position: absolute;
-  right: 20px;
-  top: 70px;
-  display: inline-block;
-  color: currentColor;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #9a3412;
   border-radius: 50%;
-  border: 1px dashed currentColor;
+  border: 1px solid rgba(251, 146, 60, 0.35);
+  background: rgba(255, 247, 237, 0.9);
+  box-shadow: 0 2px 8px rgba(154, 52, 18, 0.12);
   cursor: pointer;
-  --size: 24px;
+  --size: 34px;
   height: var(--size);
   width: var(--size);
+  line-height: 1;
   transition: all 0.3s ease-in-out 0s !important;
 }
 
-[data-mode="system"] .switch::after {
-  position: absolute;
+.switch:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 237, 213, 0.95);
+}
+
+.switch::after {
   height: 100%;
   width: 100%;
-  top: 0;
-  left: 0;
-  font-weight: 600;
-  font-size: calc(var(--size) / 2);
   display: flex;
   align-items: center;
   justify-content: center;
-  content: "A";
+  font-size: 16px;
+}
+
+[data-mode="system"] .switch::after {
+  content: "🐾";
 }
 
 [data-mode="light"] .switch {
-  box-shadow: 0 0 50px 10px yellow;
-  background-color: yellow;
-  border: 1px solid orangered;
+  color: #9a3412;
+}
+
+[data-mode="light"] .switch::after {
+  content: "☀️";
 }
 
 [data-mode="dark"] .switch {
-  box-shadow: calc(var(--size) / 4) calc(var(--size) / -4) calc(var(--size) / 8)
-    inset #fff;
-  border: none;
-  background: transparent;
-  animation: n linear 0.5s;
+  color: #fed7aa;
+  border-color: rgba(253, 186, 116, 0.28);
+  background: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
 }
 
-@keyframes n {
-  40% {
-    transform: rotate(-15deg);
-  }
-  80% {
-    transform: rotate(10deg);
-  }
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
+[data-mode="dark"] .switch::after {
+  content: "🌙";
 }

@@ -1,19 +1,18 @@
 ---
-title: "Preview Mode for Static Generation"
-excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus."
-coverImage: "/assets/blog/preview/cover.jpg"
-date: "2020-03-16T05:35:07.322Z"
+title: "波比老板今日上线"
+excerpt: "波比老板准时抵达事务所，完成巡视、审阅纸箱、监督人类开工等重要事项，并宣布今日营业状态良好。"
+coverImage: "/bobby/hero.jpg"
+date: "2026-06-10T09:03:00.000Z"
 author:
-  name: Joe Haddad
-  picture: "/assets/blog/authors/joe.jpeg"
+  name: 🐱 波比老板
 ogImage:
-  url: "/assets/blog/preview/cover.jpg"
+  url: "/bobby/hero.jpg"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+今天上午九点零三分，波比老板正式上线。上线仪式非常隆重：先在门口停顿三秒，确认地毯没有擅自移动；再慢慢走向办公区，用尾巴扫过椅子腿，完成本日第一次资产盘点。人类员工试图汇报工作进度，波比只眯了眯眼，表示“知道了，先把饭盆补满”。
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
+十点整，波比召开临时会议。会议地点选在阳光最好的那块地板，参会人员包括猫老板本人、一个纸箱、一只路过的逗猫棒，以及正在假装忙碌的人类。会议结论十分明确：今日事务所继续营业，但所有文件必须经过爪印认证。
 
-## Lorem Ipsum
+午后，波比对窗外进行了长达二十分钟的战略观察。观察对象疑似风、树影和一辆路过的电动车。观察结束后，老板宣布精神损耗较大，需要追加一份冻干作为办公补贴。财务部提出疑问，波比把头转向另一边，视为审批通过。
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+截至发稿，波比老板状态稳定，毛发蓬松，营业气场充足。事务所提醒各位访客：进入办公室请放轻脚步，如遇猫老板翻肚皮，不代表允许摸肚子，具体解释权归波比所有。

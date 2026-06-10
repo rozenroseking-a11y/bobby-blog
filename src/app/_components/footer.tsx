@@ -1,28 +1,22 @@
 import Container from "@/app/_components/container";
-import { EXAMPLE_PATH } from "@/lib/constants";
 
 export function Footer() {
   return (
-    <footer className="bg-neutral-50 border-t border-neutral-200 dark:bg-slate-800">
+    <footer className="border-t border-orange-100 bg-orange-50/70 dark:border-slate-700 dark:bg-slate-800">
       <Container>
-        <div className="py-28 flex flex-col lg:flex-row items-center">
-          <h3 className="text-4xl lg:text-[2.5rem] font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Statically Generated with Next.js.
-          </h3>
-          <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
-            <a
-              href="https://nextjs.org/docs/app/building-your-application/routing/layouts-and-templates"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
-            >
-              Read Documentation
-            </a>
-            <a
-              href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-              className="mx-3 font-bold hover:underline"
-            >
-              View on GitHub
-            </a>
-          </div>
+        <div className="py-10 text-center">
+          <p className="text-lg font-bold text-slate-900 dark:text-slate-100">
+            🐾 波比事务所 © 2026
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            猫老板今日巡视完毕，访客请自觉留下夸夸。
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            冻干预算由波比亲自审批，午睡制度由猫猫委员会监督执行。
+          </p>
+          <p className="mt-4 text-xs font-medium text-orange-700 dark:text-orange-200">
+            本网站由猫爪、午睡和小零食共同驱动。
+          </p>
         </div>
       </Container>
     </footer>

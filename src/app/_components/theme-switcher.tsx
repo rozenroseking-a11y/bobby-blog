@@ -88,6 +88,8 @@ const Switch = () => {
       suppressHydrationWarning
       className={styles.switch}
       onClick={handleModeSwitch}
+      aria-label="切换网站主题"
+      title="切换网站主题"
     />
   );
 };
