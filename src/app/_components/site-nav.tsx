@@ -3,7 +3,7 @@
 import cn from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AuthNav } from "./auth-nav";
 import { ThemeSwitcher } from "./theme-switcher";
 
@@ -27,6 +27,37 @@ export function SiteNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    function handlePointerDown(event: PointerEvent) {
+      const target = event.target;
+
+      if (!(target instanceof Node)) {
+        return;
+      }
+
+      if (moreMenuRef.current && !moreMenuRef.current.contains(target)) {
+        setIsMoreOpen(false);
+      }
+
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(target) &&
+        !mobileToggleRef.current?.contains(target)
+      ) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, []);
 
   function renderLink(
     item: {
@@ -82,7 +113,7 @@ export function SiteNav() {
             {primaryNavItems.map((item) => (
               <span key={item.href}>{renderLink(item)}</span>
             ))}
-            <div className="relative">
+            <div ref={moreMenuRef} className="relative">
               <button
                 type="button"
                 onClick={() => setIsMoreOpen((open) => !open)}
@@ -93,11 +124,12 @@ export function SiteNav() {
                     : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100",
                 )}
                 aria-expanded={isMoreOpen}
+                aria-haspopup="menu"
               >
                 更多 ▾
               </button>
               {isMoreOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-orange-100 bg-white p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-orange-100 bg-orange-50 p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
                   {moreNavItems.map((item) => (
                     <div key={item.href}>{renderLink(item, "menu")}</div>
                   ))}
@@ -114,10 +146,12 @@ export function SiteNav() {
           </div>
           <div className="flex items-center gap-2 lg:hidden">
             <button
+              ref={mobileToggleRef}
               type="button"
               onClick={() => setIsOpen((open) => !open)}
               className="rounded-full bg-orange-50 px-4 py-2 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 dark:bg-orange-300/10 dark:text-orange-200 dark:ring-orange-300/20"
               aria-expanded={isOpen}
+              aria-haspopup="menu"
             >
               {isOpen ? "收起" : "菜单"}
             </button>
@@ -126,6 +160,7 @@ export function SiteNav() {
 
         {isOpen && (
           <nav
+            ref={mobileMenuRef}
             aria-label="移动端主导航"
             className="relative z-50 mt-3 rounded-2xl border border-orange-100 bg-orange-50/95 p-3 shadow-lg dark:border-orange-300/20 dark:bg-slate-900/95 lg:hidden"
           >
