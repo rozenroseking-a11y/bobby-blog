@@ -97,9 +97,9 @@ export function SiteNav() {
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/90">
-      <div className="mx-auto flex w-full max-w-[1180px] flex-col px-4 py-2.5 md:px-6">
-        <div className="flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-50 overflow-visible border-b border-slate-200/70 bg-white/90 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/90">
+      <div className="mx-auto flex w-full max-w-[1180px] flex-col overflow-visible px-4 py-2.5 md:px-6">
+        <div className="flex items-center justify-between gap-3 overflow-visible">
           <Link
             href="/"
             className="shrink-0 text-lg font-bold tracking-tight text-slate-900 hover:text-orange-600 dark:text-slate-100 dark:hover:text-orange-300"
@@ -108,12 +108,12 @@ export function SiteNav() {
           </Link>
           <nav
             aria-label="主导航"
-            className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-visible lg:flex"
           >
             {primaryNavItems.map((item) => (
               <span key={item.href}>{renderLink(item)}</span>
             ))}
-            <div ref={moreMenuRef} className="relative">
+            <div ref={moreMenuRef} className="relative overflow-visible">
               <button
                 type="button"
                 onClick={() => setIsMoreOpen((open) => !open)}
@@ -126,17 +126,13 @@ export function SiteNav() {
                 aria-expanded={isMoreOpen}
                 aria-haspopup="menu"
               >
-                更多 ▾
+                {isMoreOpen ? "更多 ▲" : "更多 ▾"}
               </button>
               {isMoreOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-orange-100 bg-orange-50 p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                <div className="absolute right-0 top-full z-[9999] mt-2 w-48 rounded-2xl border border-red-300 bg-white p-2 shadow-lg dark:bg-slate-900">
                   {moreNavItems.map((item) => (
                     <div key={item.href}>{renderLink(item, "menu")}</div>
                   ))}
-                  <div className="mt-2 flex items-center justify-between border-t border-orange-100 px-3 py-2 text-sm font-bold text-slate-700 dark:border-slate-700 dark:text-slate-200">
-                    <span>主题切换</span>
-                    <ThemeSwitcher />
-                  </div>
                 </div>
               )}
             </div>
