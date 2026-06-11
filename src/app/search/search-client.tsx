@@ -34,8 +34,8 @@ export function SearchClient({ entries }: Props) {
   }, [entries, normalizedQuery]);
 
   return (
-    <section className="mb-24">
-      <div className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-6">
+    <section className="mb-16">
+      <div className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <label
           htmlFor="site-search"
           className="text-sm font-bold text-orange-700 dark:text-orange-200"
@@ -54,7 +54,7 @@ export function SearchClient({ entries }: Props) {
         </p>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
         {results.map((entry) => (
           <Link
             key={entry.href}

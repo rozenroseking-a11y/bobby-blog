@@ -25,15 +25,15 @@ export default function FriendsPage() {
       <Container>
         <PageHeader
           eyebrow="🐾 来访名单"
-          title="猫猫朋友"
+          title="来访猫友"
           description="波比事务所的来访嘉宾名单，主角仍然是猫老板波比。"
         />
 
-        <section className="grid grid-cols-1 gap-8 md:grid-cols-2 mb-20">
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-16">
           {friends.map((friend) => (
             <article
               key={friend.name}
-              className="rounded-lg border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+              className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-md">
                 <Image

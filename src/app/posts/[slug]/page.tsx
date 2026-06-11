@@ -25,7 +25,7 @@ export default async function Post(props: Params) {
     <main>
       <Alert preview={post.preview} />
       <Container>
-        <article className="mb-32">
+        <article className="mb-20">
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}
@@ -34,7 +34,7 @@ export default async function Post(props: Params) {
             author={post.author}
           />
           <ArticleMetrics postSlug={post.slug} />
-          <section className="max-w-3xl mx-auto mb-8 rounded-2xl border border-rose-100 bg-rose-50/70 p-6 shadow-sm dark:border-rose-300/20 dark:bg-rose-300/10">
+          <section className="max-w-3xl mx-auto mb-5 rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               🐾 档案摘要
             </h2>
@@ -44,7 +44,7 @@ export default async function Post(props: Params) {
             </p>
           </section>
           <PostBody content={content} />
-          <section className="max-w-3xl mx-auto mt-8 rounded-2xl border border-orange-100 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <section className="max-w-3xl mx-auto mt-5 rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               🐱 猫老板批注
             </h2>
@@ -58,7 +58,7 @@ export default async function Post(props: Params) {
               href="/posts"
               className="inline-flex rounded-full bg-orange-100 px-5 py-3 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 dark:bg-orange-300/20 dark:text-orange-100 dark:hover:bg-orange-300/30"
             >
-              ← 返回波比日记
+              ← 返回档案记录
             </Link>
           </div>
         </article>

@@ -10,12 +10,12 @@ export default function PostsPage() {
     <main>
       <Container>
         <PageHeader
-          eyebrow="📒 营业记录"
-          title="波比日记"
-          description="记录猫老板的日常、吃饭、搞笑瞬间和成长记录。"
+          eyebrow="📒 档案记录"
+          title="波比事务所档案记录"
+          description="记录猫老板的日常、吃饭、搞笑瞬间和成长记录。每一份都已放入档案袋。"
         />
 
-        <section className="grid grid-cols-1 gap-y-20 mb-32 md:grid-cols-2 md:gap-x-16 md:gap-y-24 lg:gap-x-32">
+        <section className="grid grid-cols-1 gap-6 mb-16 md:grid-cols-2 lg:gap-8">
           {posts.map((post) => (
             <PostPreview
               key={post.slug}

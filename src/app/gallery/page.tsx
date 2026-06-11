@@ -67,12 +67,12 @@ export default function GalleryPage() {
       <Container>
         <PageHeader
           eyebrow="📸 影像档案"
-          title="波比相册"
+          title="影像档案"
           description="猫老板的营业记录、下班瞬间与朋友来访证据。"
         />
 
-        <section className="mb-10 rounded-2xl border border-orange-100 bg-orange-50/70 p-6 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-8">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+        <section className="mb-8 rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-6">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
             📸 波比营业影像档案
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-slate-700 dark:text-slate-300">
@@ -80,7 +80,7 @@ export default function GalleryPage() {
           </p>
         </section>
 
-        <section className="grid grid-cols-1 gap-8 md:grid-cols-3 mb-10">
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-3 mb-8">
           {galleryItems.map((item) => (
             <figure
               key={item.src}

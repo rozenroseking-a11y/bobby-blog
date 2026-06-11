@@ -7,9 +7,9 @@ export default function GuestbookPage() {
     <main>
       <Container>
         <PageHeader
-          eyebrow="📮 小纸条投递处"
-          title="给波比老板投递小纸条"
-          description="留言会先投递到猫老板的待审纸箱，审核通过后再公开展示。"
+          eyebrow="📮 来访登记簿"
+          title="给波比老板递交小纸条"
+          description="来访的朋友可以留下小纸条，猫老板审核后公开展示。"
         />
 
         <GuestbookClient />

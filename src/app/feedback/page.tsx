@@ -8,8 +8,8 @@ export default function FeedbackPage() {
       <Container>
         <PageHeader
           eyebrow="📬 猫老板信箱"
-          title="意见反馈中心"
-          description="把建议、问题、夸夸或其他小纸条投递给波比事务所，猫老板会认真巡视。"
+          title="猫老板信箱"
+          description="有建议、问题、夸夸或吐槽，都可以投递给猫老板。"
         />
         <FeedbackClient />
       </Container>

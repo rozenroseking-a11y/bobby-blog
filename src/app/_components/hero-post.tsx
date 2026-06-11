@@ -1,3 +1,4 @@
+import { ArticleStatBadges } from "@/app/_components/article-stat-badges";
 import Avatar from "@/app/_components/avatar";
 import { BobbyOfficeWidgets } from "@/app/_components/bobby-office-widgets";
 import CoverImage from "@/app/_components/cover-image";
@@ -26,19 +27,19 @@ export function HeroPost({
 }: Props) {
   return (
     <section>
-      <div className="mb-8 md:mb-16">
+      <div className="mb-6 md:mb-8">
         <CoverImage
           title={title}
           src={coverImage}
           slug={slug}
-          className="md:h-[min(42vw,520px)] md:object-cover"
+          className="md:h-[min(36vw,460px)] md:object-cover"
         />
       </div>
-      <BobbyOfficeWidgets />
-      <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
+      <BobbyOfficeWidgets latestPostTitle={title} latestPostSlug={slug} />
+      <div className="mb-14 rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:grid md:grid-cols-[0.9fr_1.1fr] md:gap-x-8 md:p-6">
         <div>
           <div className="mb-3 inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 ring-1 ring-orange-100 dark:bg-orange-300/10 dark:text-orange-200 dark:ring-orange-300/20">
-            今日主档案{category ? ` · ${category}` : ""}
+            最新档案记录{category ? ` · ${category}` : ""}
           </div>
           <h3 className="mb-4 text-3xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100 lg:text-4xl">
             <Link
@@ -53,7 +54,10 @@ export function HeroPost({
           </div>
         </div>
         <div>
-          <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+          <p className="text-base leading-relaxed mb-4 text-slate-700 dark:text-slate-300 md:text-lg">
+            {excerpt}
+          </p>
+          <ArticleStatBadges postSlug={slug} />
           <Avatar name={author.name} />
         </div>
       </div>

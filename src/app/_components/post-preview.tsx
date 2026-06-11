@@ -1,5 +1,6 @@
 import { type Author } from "@/interfaces/author";
 import Link from "next/link";
+import { ArticleStatBadges } from "./article-stat-badges";
 import Avatar from "./avatar";
 import CoverImage from "./cover-image";
 import DateFormatter from "./date-formatter";
@@ -24,8 +25,8 @@ export function PostPreview({
   slug,
 }: Props) {
   return (
-    <div>
-      <div className="mb-5">
+    <article className="rounded-2xl border border-orange-100 bg-orange-50/40 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-orange-300/20 dark:bg-orange-300/10">
+      <div className="mb-4">
         <CoverImage slug={slug} title={title} src={coverImage} />
       </div>
       {category && (
@@ -33,16 +34,17 @@ export function PostPreview({
           🗃️ {category}
         </div>
       )}
-      <h3 className="text-3xl mb-3 leading-snug">
+      <h3 className="text-2xl mb-3 leading-snug font-bold tracking-tight">
         <Link href={`/posts/${slug}`} className="hover:underline">
           {title}
         </Link>
       </h3>
-      <div className="text-lg mb-4">
+      <div className="text-base mb-3 text-slate-600 dark:text-slate-300">
         <DateFormatter dateString={date} />
       </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+      <p className="text-base leading-relaxed mb-3 text-slate-700 dark:text-slate-300">{excerpt}</p>
+      <ArticleStatBadges postSlug={slug} />
       <Avatar name={author.name} />
-    </div>
+    </article>
   );
 }

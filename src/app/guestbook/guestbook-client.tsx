@@ -107,20 +107,22 @@ export function GuestbookClient() {
     }
 
     setContent("");
-    setNotice("小纸条已投递，等待猫老板审核后公开展示。");
+    setNotice("小纸条已递交，等待猫老板审阅后准许公开。");
   }
 
+  const visibleMessages = messages.slice(0, 5);
+
   return (
-    <section className="grid grid-cols-1 gap-8 mb-20 md:grid-cols-[minmax(0,1fr)_minmax(280px,420px)]">
+    <section className="grid grid-cols-1 items-start gap-6 mb-16 lg:grid-cols-[minmax(0,0.6fr)_minmax(280px,0.4fr)]">
       <form
         onSubmit={handleSubmit}
-        className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-8"
+        className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-6"
       >
-        <h2 className="mb-5 text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-          📮 投递小纸条
+        <h2 className="mb-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          📮 来访登记
         </h2>
 
-        <div className="mb-5 rounded-2xl bg-orange-50/70 p-4 dark:bg-orange-300/10">
+        <div className="mb-4 rounded-2xl bg-orange-50/70 p-4 dark:bg-orange-300/10">
           {user ? (
             <div className="flex items-center gap-3">
               <UserAvatar
@@ -138,7 +140,7 @@ export function GuestbookClient() {
             </div>
           ) : (
             <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-              未登录访客可以浏览留言，但不能投递。{" "}
+              未登录访客可以翻阅登记簿，但不能递交小纸条。{" "}
               <Link href="/auth" className="font-bold text-orange-700 underline dark:text-orange-200">
                 去登录
               </Link>
@@ -148,7 +150,7 @@ export function GuestbookClient() {
 
         <label className="block">
           <span className="text-sm font-semibold text-orange-700 dark:text-orange-200">
-            留言
+            小纸条内容
           </span>
           <textarea
             name="message"
@@ -179,31 +181,31 @@ export function GuestbookClient() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-6 rounded-full bg-orange-100 px-5 py-3 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100 dark:hover:bg-orange-300/30"
+          className="mt-4 rounded-full bg-orange-100 px-5 py-3 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100 dark:hover:bg-orange-300/30"
         >
-          {isSubmitting ? "猫爪投递中..." : "投递给猫老板"}
+          {isSubmitting ? "猫爪递交中..." : "递交小纸条"}
         </button>
-        <p className="mt-4 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+        <p className="mt-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
           注：猫老板可能会先睡一觉，再慢慢查阅大家的小纸条。
         </p>
       </form>
 
-      <aside className="rounded-2xl border border-rose-100 bg-rose-50/70 p-5 shadow-sm dark:border-rose-300/20 dark:bg-rose-300/10 md:p-8">
+      <aside className="self-start rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-6">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-          🐱 猫老板已读留言
+          🐱 最近公开留言
         </h2>
-        <div className="mt-5 space-y-4">
+        <div className="mt-4 space-y-3">
           {isLoading && (
             <p className="rounded-2xl bg-white/80 p-4 text-base leading-relaxed text-slate-700 shadow-sm ring-1 ring-rose-100 dark:bg-slate-900/80 dark:text-slate-300 dark:ring-rose-300/20">
-              正在翻阅待公开的小纸条...
+              正在翻阅来访登记簿...
             </p>
           )}
 
           {!isLoading &&
-            messages.map((message) => (
+            visibleMessages.map((message) => (
               <article
                 key={message.id}
-                className="rounded-2xl bg-white/80 p-4 text-base leading-relaxed text-slate-700 shadow-sm ring-1 ring-rose-100 dark:bg-slate-900/80 dark:text-slate-300 dark:ring-rose-300/20"
+                className="rounded-2xl bg-white/90 p-4 text-sm leading-relaxed text-slate-700 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900/80 dark:text-slate-300 dark:ring-orange-300/20"
               >
                 <div className="mb-3 flex items-center gap-3">
                   <UserAvatar
@@ -227,11 +229,11 @@ export function GuestbookClient() {
             ))}
 
           {!isLoading &&
-            messages.length === 0 &&
+            visibleMessages.length === 0 &&
             sampleMessages.map((message) => (
               <p
                 key={message}
-                className="rounded-2xl bg-white/80 p-4 text-base leading-relaxed text-slate-700 shadow-sm ring-1 ring-rose-100 dark:bg-slate-900/80 dark:text-slate-300 dark:ring-rose-300/20"
+                className="rounded-2xl bg-white/90 p-4 text-sm leading-relaxed text-slate-700 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900/80 dark:text-slate-300 dark:ring-orange-300/20"
               >
                 「{message}」
               </p>

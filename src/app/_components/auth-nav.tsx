@@ -10,9 +10,14 @@ import type { Profile } from "@/lib/supabase/types";
 
 const ADMIN_EMAILS = ["h981411799@126.com", "gg981411799@126.com"];
 
-export function AuthNav() {
+type Props = {
+  compact?: boolean;
+};
+
+export function AuthNav({ compact = false }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
@@ -70,35 +75,62 @@ export function AuthNav() {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      {user.email && ADMIN_EMAILS.includes(user.email) && (
-        <Link
-          href="/admin"
-          className="rounded-full bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm ring-1 ring-rose-100 transition hover:bg-rose-100 dark:bg-rose-300/10 dark:text-rose-200 dark:ring-rose-300/20"
-        >
-          猫老板后台
-        </Link>
-      )}
-      <Link
-        href="/account"
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setIsOpen((open) => !open)}
         className="flex items-center gap-2 rounded-full bg-orange-50 px-2 py-1 pr-3 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 transition hover:bg-orange-100 dark:bg-orange-300/10 dark:text-orange-200 dark:ring-orange-300/20"
+        aria-expanded={isOpen}
       >
         <UserAvatar
           avatarUrl={profile?.avatar_url}
           nickname={profile?.nickname}
           size="sm"
         />
-        <span className="max-w-24 truncate">
-          {profile?.nickname || "个人中心"}
+        <span className={compact ? "sr-only" : "max-w-24 truncate"}>
+          {profile?.nickname || "个人档案"}
         </span>
-      </Link>
-      <button
-        type="button"
-        onClick={handleSignOut}
-        className="rounded-full px-3 py-2 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-      >
-        退出
+        {!compact && <span className="text-xs">▾</span>}
       </button>
+
+      {isOpen && (
+        <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-orange-100 bg-white p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+          <div className="px-3 py-2 text-sm">
+            <p className="font-bold text-slate-900 dark:text-slate-100">
+              {profile?.nickname || "个人档案"}
+            </p>
+            <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+              {user.email}
+            </p>
+          </div>
+          <Link
+            href="/account"
+            onClick={() => setIsOpen(false)}
+            className="block rounded-xl px-3 py-2 text-sm font-bold text-slate-700 hover:bg-orange-50 dark:text-slate-200 dark:hover:bg-orange-300/10"
+          >
+            个人中心
+          </Link>
+          {user.email && ADMIN_EMAILS.includes(user.email) && (
+            <Link
+              href="/admin"
+              onClick={() => setIsOpen(false)}
+              className="block rounded-xl px-3 py-2 text-sm font-bold text-slate-700 hover:bg-orange-50 dark:text-slate-200 dark:hover:bg-orange-300/10"
+            >
+              猫老板办公室
+            </Link>
+          )}
+          <button
+            type="button"
+            onClick={() => {
+              setIsOpen(false);
+              handleSignOut();
+            }}
+            className="block w-full rounded-xl px-3 py-2 text-left text-sm font-bold text-rose-700 hover:bg-rose-50 dark:text-rose-200 dark:hover:bg-rose-300/10"
+          >
+            退出登录
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -8,8 +8,8 @@ export default function AdminPage() {
       <Container>
         <PageHeader
           eyebrow="🔐 内部审批台"
-          title="猫老板后台"
-          description="审核留言小纸条，决定哪些夸夸可以公开展示。"
+          title="猫老板办公室"
+          description="审核来访小纸条、档案批注和猫老板信箱，决定哪些内容可以盖章归档。"
         />
         <AdminPanel />
       </Container>

@@ -98,7 +98,7 @@ export function ArticleMetrics({ postSlug }: Props) {
   }
 
   return (
-    <section className="max-w-3xl mx-auto mb-8 rounded-2xl border border-orange-100 bg-orange-50/70 p-4 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
+    <section className="max-w-3xl mx-auto mb-5 rounded-2xl border border-orange-100 bg-orange-50/70 p-3 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-wrap gap-3">
           <div className="rounded-full bg-white px-4 py-2 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900 dark:text-orange-200 dark:ring-orange-300/20">
@@ -114,8 +114,8 @@ export function ArticleMetrics({ postSlug }: Props) {
           disabled={isLiking}
           className={
             metrics.liked_by_me
-              ? "rounded-full bg-rose-100 px-5 py-3 text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200"
-              : "rounded-full bg-white px-5 py-3 text-sm font-bold text-orange-800 shadow-sm ring-1 ring-orange-100 transition hover:bg-orange-100 disabled:opacity-60 dark:bg-slate-900 dark:text-orange-100 dark:ring-orange-300/20"
+              ? "rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200"
+              : "rounded-full bg-white px-4 py-2 text-sm font-bold text-orange-800 shadow-sm ring-1 ring-orange-100 transition hover:bg-orange-100 disabled:opacity-60 dark:bg-slate-900 dark:text-orange-100 dark:ring-orange-300/20"
           }
         >
           {metrics.liked_by_me ? "已留下猫爪" : "给档案点赞"}

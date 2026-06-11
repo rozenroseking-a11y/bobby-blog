@@ -23,9 +23,9 @@ const feedbackTypeLabels: Record<FeedbackType, string> = {
 };
 
 const feedbackStatusLabels: Record<FeedbackStatus, string> = {
-  pending: "待查看",
-  replied: "已回复",
-  resolved: "已处理",
+  pending: "待猫老板拆信",
+  replied: "猫老板已回信",
+  resolved: "已归档",
 };
 
 function formatMessageTime(value: string | null) {
@@ -169,14 +169,16 @@ export function AdminPanel() {
       return;
     }
 
-    setNotice(approved ? "留言已通过，猫老板准许公开。" : "留言已隐藏。");
+    setNotice(
+      approved ? "小纸条已准许公开。" : "小纸条已藏进猫窝。",
+    );
     await loadMessages();
   }
 
   async function deleteMessage(messageId: number) {
     setNotice("");
     setError("");
-    const confirmed = window.confirm("确认删除这张小纸条吗？");
+    const confirmed = window.confirm("确认撕掉这张小纸条吗？");
 
     if (!confirmed) {
       return;
@@ -196,7 +198,7 @@ export function AdminPanel() {
       return;
     }
 
-    setNotice("留言已删除。");
+    setNotice("小纸条已撕掉。");
     await loadMessages();
   }
 
@@ -218,7 +220,7 @@ export function AdminPanel() {
       return;
     }
 
-    setNotice("反馈已回复，猫老板的批注已归档。");
+    setNotice("回信已写好，猫老板的批注已归档。");
     await loadFeedback();
   }
 
@@ -239,14 +241,14 @@ export function AdminPanel() {
       return;
     }
 
-    setNotice("反馈状态已更新。");
+    setNotice("信箱档案状态已更新。");
     await loadFeedback();
   }
 
   async function deleteFeedback(feedbackId: number) {
     setNotice("");
     setError("");
-    const confirmed = window.confirm("确认删除这条反馈吗？");
+    const confirmed = window.confirm("确认撕掉这张信箱小纸条吗？");
 
     if (!confirmed) {
       return;
@@ -263,7 +265,7 @@ export function AdminPanel() {
       return;
     }
 
-    setNotice("反馈已删除。");
+    setNotice("信箱小纸条已撕掉。");
     await loadFeedback();
   }
 
@@ -289,7 +291,7 @@ export function AdminPanel() {
   }
 
   return (
-    <section className="mb-20">
+    <section className="mb-16">
       {(error || notice) && (
         <div className="mb-6 space-y-3">
           {error && (
@@ -305,10 +307,10 @@ export function AdminPanel() {
         </div>
       )}
 
-      <div className="mb-6 flex flex-wrap gap-2 rounded-2xl border border-orange-100 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div className="mb-5 flex flex-wrap gap-2 rounded-2xl border border-orange-100 bg-white p-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         {[
-          ["guestbook", "留言审核"],
-          ["feedback", "反馈箱"],
+          ["guestbook", "来访小纸条"],
+          ["feedback", "猫老板信箱"],
         ].map(([value, label]) => (
           <button
             key={value}
@@ -327,33 +329,33 @@ export function AdminPanel() {
 
       {tab === "guestbook" ? (
         <>
-          <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+          <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
             {[
-              ["待审核数量", stats.pending, "🐾"],
-              ["已公开数量", stats.approved, "✨"],
-              ["已隐藏数量", stats.hidden, "🌙"],
-              ["全部留言数量", stats.all, "📮"],
+              ["待猫老板审阅", stats.pending, "🐾"],
+              ["已准许公开", stats.approved, "✨"],
+              ["已藏进猫窝", stats.hidden, "🌙"],
+              ["全部小纸条", stats.all, "📮"],
             ].map(([label, value, icon]) => (
               <div
                 key={label}
-                className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10"
+                className="min-h-24 rounded-2xl border border-orange-100 bg-orange-50/70 p-4 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10"
               >
                 <p className="text-sm font-bold text-orange-700 dark:text-orange-200">
                   {icon} {label}
                 </p>
-                <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">
+                <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-slate-100">
                   {value}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="mb-6 flex flex-wrap gap-2 rounded-2xl border border-orange-100 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <div className="mb-5 flex flex-wrap gap-2 rounded-2xl border border-orange-100 bg-white p-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
             {[
               ["all", "全部"],
-              ["pending", "待审核"],
-              ["approved", "已公开"],
-              ["hidden", "已隐藏"],
+              ["pending", "待猫老板审阅"],
+              ["approved", "已准许公开"],
+              ["hidden", "已藏进猫窝"],
             ].map(([value, label]) => (
               <button
                 key={value}
@@ -370,17 +372,17 @@ export function AdminPanel() {
             ))}
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-4">
             {filteredMessages.map((message) => {
               const status = getReviewStatus(message);
 
               return (
                 <article
                   key={message.id}
-                  className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                  className="rounded-2xl border border-orange-100 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"
                 >
                   <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-                    <div className="flex gap-4">
+                    <div className="flex gap-3">
                       <UserAvatar
                         avatarUrl={message.avatar_url}
                         nickname={message.nickname ?? message.name}
@@ -400,10 +402,10 @@ export function AdminPanel() {
                             }
                           >
                             {status === "approved"
-                              ? "已公开"
+                              ? "已准许公开"
                               : status === "hidden"
-                                ? "已隐藏"
-                                : "待审核"}
+                                ? "已藏进猫窝"
+                                : "待猫老板审阅"}
                           </span>
                         </div>
                         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
@@ -417,9 +419,9 @@ export function AdminPanel() {
                     </div>
 
                     <div className="flex shrink-0 flex-wrap gap-2">
-                      <button type="button" disabled={isMutatingId === message.id} onClick={() => setApproved(message.id, true)} className="rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100">通过</button>
-                      <button type="button" disabled={isMutatingId === message.id} onClick={() => setApproved(message.id, false)} className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200">隐藏</button>
-                      <button type="button" disabled={isMutatingId === message.id} onClick={() => deleteMessage(message.id)} className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200">删除</button>
+                      <button type="button" disabled={isMutatingId === message.id} onClick={() => setApproved(message.id, true)} className="rounded-full bg-orange-100 px-3 py-2 text-xs font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100">准许公开</button>
+                      <button type="button" disabled={isMutatingId === message.id} onClick={() => setApproved(message.id, false)} className="rounded-full bg-slate-100 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200">藏进猫窝</button>
+                      <button type="button" disabled={isMutatingId === message.id} onClick={() => deleteMessage(message.id)} className="rounded-full bg-rose-100 px-3 py-2 text-xs font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200">撕掉纸条</button>
                     </div>
                   </div>
                 </article>
@@ -428,30 +430,30 @@ export function AdminPanel() {
 
             {filteredMessages.length === 0 && (
               <div className="rounded-2xl border border-orange-100 bg-white p-8 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                当前筛选下没有小纸条需要猫老板审批。
+                当前筛选下没有小纸条需要猫老板审阅。
               </div>
             )}
           </div>
         </>
       ) : (
         <>
-          <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+          <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
             {[
-              ["待查看反馈数量", feedbackStats.pending, "📬"],
-              ["已回复反馈数量", feedbackStats.replied, "✉️"],
-              ["已处理反馈数量", feedbackStats.resolved, "✅"],
-              ["全部反馈数量", feedbackStats.all, "🗂️"],
+              ["待拆信数量", feedbackStats.pending, "📬"],
+              ["已回信数量", feedbackStats.replied, "✉️"],
+              ["已归档数量", feedbackStats.resolved, "✅"],
+              ["全部信件数量", feedbackStats.all, "🗂️"],
             ].map(([label, value, icon]) => (
-              <div key={label} className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
+              <div key={label} className="min-h-24 rounded-2xl border border-orange-100 bg-orange-50/70 p-4 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
                 <p className="text-sm font-bold text-orange-700 dark:text-orange-200">{icon} {label}</p>
-                <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">{value}</p>
+                <p className="mt-2 text-2xl font-bold text-slate-900 dark:text-slate-100">{value}</p>
               </div>
             ))}
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-4">
             {feedback.map((item) => (
-              <article key={item.id} className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+              <article key={item.id} className="rounded-2xl border border-orange-100 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
                 <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                   <div className="flex gap-4">
                     <UserAvatar avatarUrl={item.avatar_url} nickname={item.nickname} />
@@ -463,16 +465,16 @@ export function AdminPanel() {
                       </div>
                       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{item.nickname || "匿名猫友"} · {item.email || "邮箱未知"} · {formatMessageTime(item.created_at)}</p>
                       <p className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-300">{item.message}</p>
-                      {item.admin_reply && <p className="mt-3 rounded-2xl bg-orange-50 p-3 text-sm leading-relaxed text-orange-800 dark:bg-orange-300/10 dark:text-orange-100">当前回复：{item.admin_reply}</p>}
+                      {item.admin_reply && <p className="mt-3 rounded-2xl bg-orange-50 p-3 text-sm leading-relaxed text-orange-800 dark:bg-orange-300/10 dark:text-orange-100">猫老板回信：{item.admin_reply}</p>}
                     </div>
                   </div>
 
                   <form onSubmit={(event) => replyFeedback(item.id, event)} className="w-full shrink-0 lg:w-80">
-                    <textarea value={replyDrafts[item.id] ?? ""} onChange={(event) => setReplyDrafts((drafts) => ({ ...drafts, [item.id]: event.target.value }))} rows={4} placeholder="给这条反馈写猫老板回复……" className="w-full resize-none rounded-2xl border border-orange-100 bg-orange-50/60 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-orange-300 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
+                    <textarea value={replyDrafts[item.id] ?? ""} onChange={(event) => setReplyDrafts((drafts) => ({ ...drafts, [item.id]: event.target.value }))} rows={4} placeholder="给这张小纸条写猫老板回信……" className="w-full resize-none rounded-2xl border border-orange-100 bg-orange-50/60 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-orange-300 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <button type="submit" disabled={isMutatingId === item.id} className="rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100">回复</button>
-                      <button type="button" disabled={isMutatingId === item.id} onClick={() => setFeedbackStatus(item.id, "resolved")} className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200">标记已处理</button>
-                      <button type="button" disabled={isMutatingId === item.id} onClick={() => deleteFeedback(item.id)} className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200">删除</button>
+                      <button type="submit" disabled={isMutatingId === item.id} className="rounded-full bg-orange-100 px-3 py-2 text-xs font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100">写回信</button>
+                      <button type="button" disabled={isMutatingId === item.id} onClick={() => setFeedbackStatus(item.id, "resolved")} className="rounded-full bg-slate-100 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200">已归档</button>
+                      <button type="button" disabled={isMutatingId === item.id} onClick={() => deleteFeedback(item.id)} className="rounded-full bg-rose-100 px-3 py-2 text-xs font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200">撕掉纸条</button>
                     </div>
                   </form>
                 </div>
@@ -480,7 +482,7 @@ export function AdminPanel() {
             ))}
 
             {feedback.length === 0 && (
-              <div className="rounded-2xl border border-orange-100 bg-white p-8 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">反馈箱目前空空如也。</div>
+              <div className="rounded-2xl border border-orange-100 bg-white p-8 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">猫老板信箱目前空空如也。</div>
             )}
           </div>
         </>

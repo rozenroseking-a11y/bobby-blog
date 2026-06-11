@@ -100,12 +100,12 @@ export function ArticleComments({ postSlug }: Props) {
     setNotice("");
 
     if (!user) {
-      setError("请先登录，再给这份档案留下评论。");
+      setError("登录后给这份档案写批注。");
       return;
     }
 
     if (!user.email_confirmed_at) {
-      setError("请先完成邮箱验证，猫老板才会接收评论。");
+      setError("请先完成邮箱验证，猫老板才会接收档案批注。");
       return;
     }
 
@@ -115,7 +115,7 @@ export function ArticleComments({ postSlug }: Props) {
     }
 
     if (!message.trim()) {
-      setError("评论不能为空。");
+      setError("批注不能为空。");
       return;
     }
 
@@ -132,7 +132,7 @@ export function ArticleComments({ postSlug }: Props) {
     }
 
     setMessage("");
-    setNotice("评论已盖上猫爪印。");
+    setNotice("档案批注已盖上猫爪印，等待猫老板审阅。");
     setPage(1);
     await loadComments(1);
   }
@@ -155,14 +155,14 @@ export function ArticleComments({ postSlug }: Props) {
       return;
     }
 
-    setNotice(approved ? "评论已公开。" : "评论已隐藏。");
+    setNotice(approved ? "批注已准许公开。" : "批注已藏进猫窝。");
     await loadComments(page);
   }
 
   async function deleteComment(commentId: number) {
     setError("");
     setNotice("");
-    const confirmed = window.confirm("确认删除这条评论吗？");
+    const confirmed = window.confirm("确认撕掉这条档案批注吗？");
 
     if (!confirmed) {
       return;
@@ -179,7 +179,7 @@ export function ArticleComments({ postSlug }: Props) {
       return;
     }
 
-    setNotice("评论已删除。");
+    setNotice("档案批注已撕掉。");
     await loadComments(page);
   }
 
@@ -190,19 +190,19 @@ export function ArticleComments({ postSlug }: Props) {
   }
 
   return (
-    <section className="mx-auto mt-8 max-w-3xl rounded-2xl border border-orange-100 bg-orange-50/60 p-6 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-8">
-      <div className="mb-6">
+    <section className="mx-auto mt-6 max-w-3xl rounded-2xl border border-orange-100 bg-orange-50/60 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-6">
+      <div className="mb-4">
         <span className="inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900 dark:text-orange-200 dark:ring-orange-300/20">
-          💬 档案评论区
+          💬 档案批注区
         </span>
-        <h2 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-3xl">
-          给这份波比档案留爪印
+        <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          给这份波比档案写批注
         </h2>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+        className="rounded-2xl border border-orange-100 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"
       >
         {user ? (
           <div className="mb-4 flex items-center gap-3">
@@ -212,7 +212,7 @@ export function ArticleComments({ postSlug }: Props) {
             />
             <div>
               <p className="text-sm font-semibold text-orange-700 dark:text-orange-200">
-                当前评论身份
+                当前批注身份
               </p>
               <p className="font-bold text-slate-900 dark:text-slate-100">
                 {profile?.nickname || "还没有设置昵称"}
@@ -221,12 +221,12 @@ export function ArticleComments({ postSlug }: Props) {
           </div>
         ) : (
           <p className="mb-4 rounded-2xl bg-orange-50 p-4 text-sm leading-relaxed text-slate-700 dark:bg-orange-300/10 dark:text-slate-300">
-            未登录访客可以浏览评论。{" "}
+            未登录访客可以浏览已公开批注。{" "}
             <Link
               href="/auth"
               className="font-bold text-orange-700 underline dark:text-orange-200"
             >
-              登录后发表评论
+              登录后给这份档案写批注
             </Link>
           </p>
         )}
@@ -235,7 +235,7 @@ export function ArticleComments({ postSlug }: Props) {
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           rows={4}
-          placeholder="写下想留给波比老板和读者的小爪印……"
+          placeholder="写下想留给波比老板和读者的档案批注……"
           className="w-full resize-none rounded-2xl border border-orange-100 bg-orange-50/60 px-4 py-3 text-base text-slate-900 outline-none transition focus:border-orange-300 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
         />
 
@@ -255,14 +255,14 @@ export function ArticleComments({ postSlug }: Props) {
           disabled={isSubmitting}
           className="mt-5 rounded-full bg-orange-100 px-5 py-3 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100"
         >
-          {isSubmitting ? "猫爪盖章中..." : "发表评论"}
+          {isSubmitting ? "猫爪盖章中..." : "提交档案批注"}
         </button>
       </form>
 
-      <div className="mt-6 space-y-4">
+      <div className="mt-5 space-y-3">
         {isLoading && (
           <p className="rounded-2xl bg-white p-4 text-slate-600 shadow-sm dark:bg-slate-900 dark:text-slate-300">
-            正在翻阅评论小纸条...
+            正在翻阅档案批注...
           </p>
         )}
 
@@ -273,7 +273,7 @@ export function ArticleComments({ postSlug }: Props) {
             return (
               <article
                 key={comment.id}
-                className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                className="rounded-2xl border border-orange-100 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"
               >
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="flex gap-3">
@@ -288,7 +288,7 @@ export function ArticleComments({ postSlug }: Props) {
                         </p>
                         {comment.review_status === "hidden" && (
                           <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-                            已隐藏
+                            已藏进猫窝
                           </span>
                         )}
                       </div>
@@ -310,7 +310,7 @@ export function ArticleComments({ postSlug }: Props) {
                           onClick={() => setApproved(comment.id, true)}
                           className="rounded-full bg-orange-100 px-3 py-2 text-xs font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100"
                         >
-                          公开
+                          准许公开
                         </button>
                         <button
                           type="button"
@@ -318,7 +318,7 @@ export function ArticleComments({ postSlug }: Props) {
                           onClick={() => setApproved(comment.id, false)}
                           className="rounded-full bg-slate-100 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200"
                         >
-                          隐藏
+                          藏进猫窝
                         </button>
                       </>
                     )}
@@ -329,7 +329,7 @@ export function ArticleComments({ postSlug }: Props) {
                         onClick={() => deleteComment(comment.id)}
                         className="rounded-full bg-rose-100 px-3 py-2 text-xs font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200"
                       >
-                        删除
+                        撕掉纸条
                       </button>
                     )}
                   </div>
@@ -340,7 +340,7 @@ export function ArticleComments({ postSlug }: Props) {
 
         {!isLoading && comments.length === 0 && (
           <p className="rounded-2xl bg-white p-4 text-slate-600 shadow-sm dark:bg-slate-900 dark:text-slate-300">
-            还没有评论，欢迎留下第一枚猫爪印。
+            还没有档案批注，欢迎留下第一枚猫爪印。
           </p>
         )}
       </div>

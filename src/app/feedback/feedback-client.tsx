@@ -21,9 +21,9 @@ const typeLabels: Record<FeedbackType, string> = {
 };
 
 const statusLabels: Record<FeedbackStatus, string> = {
-  pending: "待查看",
-  replied: "已回复",
-  resolved: "已处理",
+  pending: "待猫老板拆信",
+  replied: "猫老板已回信",
+  resolved: "已归档",
 };
 
 function formatTime(value: string | null) {
@@ -129,7 +129,7 @@ export function FeedbackClient() {
 
   if (isLoading) {
     return (
-      <div className="mb-20 rounded-2xl border border-orange-100 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div className="mb-16 rounded-2xl border border-orange-100 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         正在打开猫老板信箱...
       </div>
     );
@@ -137,12 +137,12 @@ export function FeedbackClient() {
 
   if (!user) {
     return (
-      <section className="mb-20 rounded-2xl border border-orange-100 bg-orange-50/70 p-8 text-center shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
+      <section className="mb-16 rounded-2xl border border-orange-100 bg-orange-50/70 p-6 text-center shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
           登录后给猫老板递小纸条
         </h2>
         <p className="mt-4 text-slate-700 dark:text-slate-300">
-          意见反馈会放进猫老板信箱，登录后才能投递和查看自己的记录。
+          猫老板信箱会收下建议、问题、夸夸和吐槽，登录后才能投递和查看自己的记录。
         </p>
         <Link
           href="/auth"
@@ -155,12 +155,12 @@ export function FeedbackClient() {
   }
 
   return (
-    <section className="mb-20 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(320px,480px)]">
+    <section className="mb-16 grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,0.6fr)_minmax(300px,0.4fr)]">
       <form
         onSubmit={handleSubmit}
-        className="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-8"
+        className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-6"
       >
-        <div className="mb-6 flex items-center gap-3">
+        <div className="mb-5 flex items-center gap-3">
           <UserAvatar
             avatarUrl={profile?.avatar_url}
             nickname={profile?.nickname}
@@ -205,7 +205,7 @@ export function FeedbackClient() {
 
         <label className="mt-5 block">
           <span className="text-sm font-semibold text-orange-700 dark:text-orange-200">
-            内容
+            小纸条内容
           </span>
           <textarea
             value={message}
@@ -230,21 +230,21 @@ export function FeedbackClient() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-6 rounded-full bg-orange-100 px-5 py-3 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100"
+          className="mt-4 rounded-full bg-orange-100 px-5 py-3 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100"
         >
           {isSubmitting ? "投递中..." : "投递给猫老板"}
         </button>
       </form>
 
-      <aside className="rounded-2xl border border-rose-100 bg-rose-50/70 p-6 shadow-sm dark:border-rose-300/20 dark:bg-rose-300/10 md:p-8">
+      <aside className="self-start rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-6">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-          📬 我的反馈档案
+          📬 我的信箱档案
         </h2>
-        <div className="mt-5 space-y-4">
+        <div className="mt-4 space-y-3">
           {items.map((item) => (
             <article
               key={item.id}
-              className="rounded-2xl bg-white/90 p-4 shadow-sm ring-1 ring-rose-100 dark:bg-slate-900/80 dark:ring-rose-300/20"
+              className="rounded-2xl bg-white/90 p-4 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900/80 dark:ring-orange-300/20"
             >
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 dark:bg-orange-300/10 dark:text-orange-200">
@@ -262,7 +262,7 @@ export function FeedbackClient() {
               </p>
               {item.admin_reply && (
                 <p className="mt-3 rounded-2xl bg-orange-50 p-3 text-sm leading-relaxed text-orange-800 dark:bg-orange-300/10 dark:text-orange-100">
-                  猫老板回复：{item.admin_reply}
+                  猫老板回信：{item.admin_reply}
                 </p>
               )}
               <time className="mt-3 block text-xs text-slate-500 dark:text-slate-400">
@@ -271,8 +271,8 @@ export function FeedbackClient() {
             </article>
           ))}
           {items.length === 0 && (
-            <p className="rounded-2xl bg-white/90 p-4 text-slate-600 shadow-sm ring-1 ring-rose-100 dark:bg-slate-900/80 dark:text-slate-300 dark:ring-rose-300/20">
-              还没有投递过反馈，小纸条箱正在安静等待。
+            <p className="rounded-2xl bg-white/90 p-4 text-slate-600 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900/80 dark:text-slate-300 dark:ring-orange-300/20">
+              还没有投递过小纸条，猫老板信箱正在安静等待。
             </p>
           )}
         </div>

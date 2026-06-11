@@ -14,11 +14,11 @@ export default function CategoriesPage() {
       <Container>
         <PageHeader
           eyebrow="🗂️ 猫爪分类柜"
-          title="文章分类"
+          title="档案分类柜"
           description="波比事务所把日记、冻干审计和午睡制度分开放好，方便访客按爪印查阅。"
         />
 
-        <div className="mb-24 space-y-12">
+        <div className="mb-16 space-y-10">
           {categories.map((category) => {
             const categoryPosts = posts.filter(
               (post) => (post.category || "未归档") === category,
@@ -31,7 +31,7 @@ export default function CategoriesPage() {
                     🐾 {category}
                   </h2>
                 </div>
-                <div className="grid grid-cols-1 gap-y-16 md:grid-cols-2 md:gap-x-16 lg:gap-x-24">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
                   {categoryPosts.map((post) => (
                     <PostPreview
                       key={post.slug}
