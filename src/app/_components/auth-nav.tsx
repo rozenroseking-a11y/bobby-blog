@@ -12,9 +12,11 @@ const ADMIN_EMAILS = ["h981411799@126.com", "gg981411799@126.com"];
 
 type Props = {
   compact?: boolean;
+  menu?: boolean;
+  onNavigate?: () => void;
 };
 
-export function AuthNav({ compact = false }: Props) {
+export function AuthNav({ compact = false, menu = false, onNavigate }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -67,10 +69,59 @@ export function AuthNav({ compact = false }: Props) {
     return (
       <Link
         href="/auth"
+        onClick={onNavigate}
         className="rounded-full bg-orange-50 px-4 py-2 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 transition hover:bg-orange-100 dark:bg-orange-300/10 dark:text-orange-200 dark:ring-orange-300/20"
       >
         登录
       </Link>
+    );
+  }
+
+  if (menu) {
+    return (
+      <div className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900 dark:ring-orange-300/20">
+        <div className="mb-2 flex items-center gap-3 px-2 py-1">
+          <UserAvatar
+            avatarUrl={profile?.avatar_url}
+            nickname={profile?.nickname}
+            size="sm"
+          />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-bold text-slate-900 dark:text-slate-100">
+              {profile?.nickname || "个人档案"}
+            </p>
+            <p className="truncate text-xs text-slate-500 dark:text-slate-400">
+              {user.email}
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/account"
+          onClick={onNavigate}
+          className="block rounded-xl px-3 py-2 text-sm font-bold text-slate-700 hover:bg-orange-50 dark:text-slate-200 dark:hover:bg-orange-300/10"
+        >
+          个人中心
+        </Link>
+        {user.email && ADMIN_EMAILS.includes(user.email) && (
+          <Link
+            href="/admin"
+            onClick={onNavigate}
+            className="block rounded-xl px-3 py-2 text-sm font-bold text-slate-700 hover:bg-orange-50 dark:text-slate-200 dark:hover:bg-orange-300/10"
+          >
+            猫老板办公室
+          </Link>
+        )}
+        <button
+          type="button"
+          onClick={() => {
+            onNavigate?.();
+            handleSignOut();
+          }}
+          className="block w-full rounded-xl px-3 py-2 text-left text-sm font-bold text-rose-700 hover:bg-rose-50 dark:text-rose-200 dark:hover:bg-rose-300/10"
+        >
+          退出登录
+        </button>
+      </div>
     );
   }
 
@@ -94,7 +145,7 @@ export function AuthNav({ compact = false }: Props) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-orange-100 bg-white p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+        <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-orange-100 bg-white p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
           <div className="px-3 py-2 text-sm">
             <p className="font-bold text-slate-900 dark:text-slate-100">
               {profile?.nickname || "个人档案"}

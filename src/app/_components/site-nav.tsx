@@ -66,7 +66,7 @@ export function SiteNav() {
   );
 
   return (
-    <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/90 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/90">
+    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/90">
       <div className="mx-auto flex w-full max-w-[1180px] flex-col px-4 py-2.5 md:px-6">
         <div className="flex items-center justify-between gap-3">
           <Link
@@ -97,7 +97,7 @@ export function SiteNav() {
                 更多 ▾
               </button>
               {isMoreOpen && (
-                <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-orange-100 bg-white p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-orange-100 bg-white p-2 shadow-lg dark:border-slate-700 dark:bg-slate-900">
                   {moreNavItems.map((item) => (
                     <div key={item.href}>{renderLink(item, "menu")}</div>
                   ))}
@@ -113,7 +113,6 @@ export function SiteNav() {
             <AuthNav />
           </div>
           <div className="flex items-center gap-2 lg:hidden">
-            <AuthNav compact />
             <button
               type="button"
               onClick={() => setIsOpen((open) => !open)}
@@ -128,7 +127,7 @@ export function SiteNav() {
         {isOpen && (
           <nav
             aria-label="移动端主导航"
-            className="mt-3 rounded-2xl border border-orange-100 bg-orange-50/80 p-3 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 lg:hidden"
+            className="relative z-50 mt-3 rounded-2xl border border-orange-100 bg-orange-50/95 p-3 shadow-lg dark:border-orange-300/20 dark:bg-slate-900/95 lg:hidden"
           >
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {[...primaryNavItems, ...moreNavItems].map((item) => (
@@ -138,6 +137,9 @@ export function SiteNav() {
             <div className="mt-3 flex items-center justify-between rounded-2xl bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900 dark:text-slate-200 dark:ring-orange-300/20">
               <span>主题切换</span>
               <ThemeSwitcher />
+            </div>
+            <div className="mt-3">
+              <AuthNav menu onNavigate={() => setIsOpen(false)} />
             </div>
           </nav>
         )}
