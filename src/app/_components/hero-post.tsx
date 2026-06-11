@@ -8,6 +8,7 @@ import DateFormatter from "./date-formatter";
 type Props = {
   title: string;
   coverImage: string;
+  category?: string;
   date: string;
   excerpt: string;
   author: Author;
@@ -17,6 +18,7 @@ type Props = {
 export function HeroPost({
   title,
   coverImage,
+  category,
   date,
   excerpt,
   author,
@@ -35,8 +37,14 @@ export function HeroPost({
       <BobbyOfficeWidgets />
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
-          <h3 className="mb-4 text-4xl lg:text-5xl leading-tight">
-            <Link href={`/posts/${slug}`} className="hover:underline">
+          <div className="mb-3 inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 ring-1 ring-orange-100 dark:bg-orange-300/10 dark:text-orange-200 dark:ring-orange-300/20">
+            今日主档案{category ? ` · ${category}` : ""}
+          </div>
+          <h3 className="mb-4 text-3xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100 lg:text-4xl">
+            <Link
+              href={`/posts/${slug}`}
+              className="hover:text-orange-700 dark:hover:text-orange-200"
+            >
               {title}
             </Link>
           </h3>

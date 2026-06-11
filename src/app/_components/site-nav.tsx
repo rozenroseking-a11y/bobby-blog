@@ -9,10 +9,14 @@ import { ThemeSwitcher } from "./theme-switcher";
 const navItems = [
   { href: "/", label: "首页" },
   { href: "/posts", label: "波比日记" },
+  { href: "/search", label: "搜索" },
+  { href: "/categories", label: "分类" },
   { href: "/gallery", label: "波比相册" },
   { href: "/friends", label: "猫猫朋友" },
   { href: "/about", label: "关于波比" },
   { href: "/guestbook", label: "留言区" },
+  { href: "/feedback", label: "意见反馈" },
+  { href: "/changelog", label: "更新日志" },
 ];
 
 export function SiteNav() {

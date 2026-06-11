@@ -2,6 +2,7 @@
 title: "本月冻干审计报告"
 excerpt: "波比事务所发布本月冻干消耗审计结果：库存下降速度惊人，但猫老板坚持认为这属于必要办公成本。"
 coverImage: "/bobby/bobby-food.jpg"
+category: "冻干审计"
 date: "2026-06-09T10:00:00.000Z"
 author:
   name: 😼 冻干审计官

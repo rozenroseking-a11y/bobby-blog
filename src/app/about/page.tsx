@@ -1,4 +1,5 @@
 import Container from "@/app/_components/container";
+import { PageHeader } from "@/app/_components/page-header";
 import Image from "next/image";
 
 const profileCards = [
@@ -34,18 +35,30 @@ const profileCards = [
   },
 ];
 
+const workNotes = [
+  {
+    title: "上午巡场",
+    text: "先检查门口、饭盆和人类精神状态，必要时用眼神安排今日重点工作。",
+  },
+  {
+    title: "午间审批",
+    text: "所有文件可放到爪边，若被压住，代表进入猫老板深度审核流程。",
+  },
+  {
+    title: "傍晚总结",
+    text: "巡视窗边、评估冻干库存，并决定明天是否继续认真营业。",
+  },
+];
+
 export default function AboutPage() {
   return (
     <main>
       <Container>
-        <section className="mt-16 mb-12 text-center md:text-left">
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight">
-            关于波比老板 🐱
-          </h1>
-          <p className="text-lg mt-5 text-slate-600 dark:text-slate-300">
-            波比事务所最高负责人，主要工作是可爱、监督和批准冻干预算。
-          </p>
-        </section>
+        <PageHeader
+          eyebrow="🐱 老板档案"
+          title="关于波比老板"
+          description="波比事务所最高负责人，主要工作是可爱、监督和批准冻干预算。"
+        />
 
         <section className="mb-10 overflow-hidden rounded-2xl border border-orange-100 bg-orange-50/70 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
           <div className="grid grid-cols-1 md:grid-cols-2">
@@ -70,6 +83,16 @@ export default function AboutPage() {
                 波比是一只认真营业的小猫，也是波比事务所的创始猫。
                 他负责巡视办公室、监督人类工作、审核冻干库存，并在必要时用可爱解决所有问题。
               </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {["创始猫", "冻干预算审批人", "午睡制度守护者"].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full bg-white px-4 py-2 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900 dark:text-orange-200 dark:ring-orange-300/20"
+                  >
+                    🐾 {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -93,6 +116,27 @@ export default function AboutPage() {
               </p>
             </article>
           ))}
+        </section>
+
+        <section className="mb-10 rounded-2xl border border-orange-100 bg-orange-50/70 p-6 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-8">
+          <div className="inline-flex rounded-full bg-white px-4 py-2 text-sm font-bold text-orange-700 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900 dark:text-orange-200 dark:ring-orange-300/20">
+            ✨ 老板今日工作流
+          </div>
+          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
+            {workNotes.map((note) => (
+              <article
+                key={note.title}
+                className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-orange-100 dark:bg-slate-900 dark:ring-orange-300/20"
+              >
+                <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+                  {note.title}
+                </h2>
+                <p className="mt-3 text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                  {note.text}
+                </p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="mb-20 rounded-2xl border border-rose-100 bg-rose-50/70 p-6 text-center shadow-sm dark:border-rose-300/20 dark:bg-rose-300/10 md:p-8">

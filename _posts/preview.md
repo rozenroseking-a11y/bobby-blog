@@ -2,6 +2,7 @@
 title: "波比老板今日上线"
 excerpt: "波比老板准时抵达事务所，完成巡视、审阅纸箱、监督人类开工等重要事项，并宣布今日营业状态良好。"
 coverImage: "/bobby/hero.jpg"
+category: "营业日记"
 date: "2026-06-10T09:03:00.000Z"
 author:
   name: 🐱 波比老板

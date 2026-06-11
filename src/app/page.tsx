@@ -18,6 +18,7 @@ export default function Index() {
         <HeroPost
           title={heroPost.title}
           coverImage="/bobby/hero.jpg"
+          category={heroPost.category}
           date={heroPost.date}
           author={heroPost.author}
           slug={heroPost.slug}

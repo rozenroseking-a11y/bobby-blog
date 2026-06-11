@@ -1,13 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import type { User } from "@supabase/supabase-js";
 import { UserAvatar } from "@/app/_components/user-avatar";
 import { isSupabaseConfigured, supabase } from "@/lib/supabase/client";
-import type { AdminGuestbookMessage } from "@/lib/supabase/types";
+import type {
+  AdminFeedbackMessage,
+  AdminGuestbookMessage,
+  FeedbackStatus,
+  FeedbackType,
+} from "@/lib/supabase/types";
 
 const ADMIN_EMAILS = ["h981411799@126.com", "gg981411799@126.com"];
 type Filter = "all" | "pending" | "approved" | "hidden";
+type AdminTab = "guestbook" | "feedback";
+
+const feedbackTypeLabels: Record<FeedbackType, string> = {
+  suggestion: "建议",
+  bug: "问题",
+  praise: "夸夸",
+  other: "其他",
+};
+
+const feedbackStatusLabels: Record<FeedbackStatus, string> = {
+  pending: "待查看",
+  replied: "已回复",
+  resolved: "已处理",
+};
 
 function formatMessageTime(value: string | null) {
   if (!value) {
@@ -35,9 +54,12 @@ function getReviewStatus(message: AdminGuestbookMessage): Exclude<Filter, "all">
 export function AdminPanel() {
   const [user, setUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<AdminGuestbookMessage[]>([]);
+  const [feedback, setFeedback] = useState<AdminFeedbackMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isMutatingId, setIsMutatingId] = useState<number | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
+  const [tab, setTab] = useState<AdminTab>("guestbook");
+  const [replyDrafts, setReplyDrafts] = useState<Record<number, string>>({});
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
 
@@ -51,6 +73,12 @@ export function AdminPanel() {
     ).length,
     hidden: messages.filter((message) => getReviewStatus(message) === "hidden")
       .length,
+  };
+  const feedbackStats = {
+    all: feedback.length,
+    pending: feedback.filter((item) => item.status === "pending").length,
+    replied: feedback.filter((item) => item.status === "replied").length,
+    resolved: feedback.filter((item) => item.status === "resolved").length,
   };
   const filteredMessages =
     filter === "all"
@@ -69,6 +97,25 @@ export function AdminPanel() {
     }
 
     setMessages(data ?? []);
+  }
+
+  async function loadFeedback() {
+    setError("");
+    const { data, error: rpcError } = await supabase.rpc(
+      "admin_feedback_messages",
+    );
+
+    if (rpcError) {
+      setError(rpcError.message);
+      return;
+    }
+
+    setFeedback(data ?? []);
+    setReplyDrafts(
+      Object.fromEntries(
+        (data ?? []).map((item) => [item.id, item.admin_reply ?? ""]),
+      ),
+    );
   }
 
   useEffect(() => {
@@ -93,7 +140,7 @@ export function AdminPanel() {
       setUser(currentUser);
 
       if (currentUser?.email && ADMIN_EMAILS.includes(currentUser.email)) {
-        await loadMessages();
+        await Promise.all([loadMessages(), loadFeedback()]);
       }
 
       setIsLoading(false);
@@ -153,6 +200,73 @@ export function AdminPanel() {
     await loadMessages();
   }
 
+  async function replyFeedback(feedbackId: number, event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setNotice("");
+    setError("");
+    setIsMutatingId(feedbackId);
+
+    const { error: rpcError } = await supabase.rpc("admin_reply_feedback", {
+      feedback_id: feedbackId,
+      reply_text: replyDrafts[feedbackId] ?? "",
+    });
+
+    setIsMutatingId(null);
+
+    if (rpcError) {
+      setError(rpcError.message);
+      return;
+    }
+
+    setNotice("反馈已回复，猫老板的批注已归档。");
+    await loadFeedback();
+  }
+
+  async function setFeedbackStatus(feedbackId: number, status: FeedbackStatus) {
+    setNotice("");
+    setError("");
+    setIsMutatingId(feedbackId);
+
+    const { error: rpcError } = await supabase.rpc("admin_set_feedback_status", {
+      feedback_id: feedbackId,
+      next_status: status,
+    });
+
+    setIsMutatingId(null);
+
+    if (rpcError) {
+      setError(rpcError.message);
+      return;
+    }
+
+    setNotice("反馈状态已更新。");
+    await loadFeedback();
+  }
+
+  async function deleteFeedback(feedbackId: number) {
+    setNotice("");
+    setError("");
+    const confirmed = window.confirm("确认删除这条反馈吗？");
+
+    if (!confirmed) {
+      return;
+    }
+
+    setIsMutatingId(feedbackId);
+    const { error: rpcError } = await supabase.rpc("admin_delete_feedback", {
+      feedback_id: feedbackId,
+    });
+    setIsMutatingId(null);
+
+    if (rpcError) {
+      setError(rpcError.message);
+      return;
+    }
+
+    setNotice("反馈已删除。");
+    await loadFeedback();
+  }
+
   if (isLoading) {
     return (
       <div className="rounded-2xl border border-orange-100 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
@@ -191,40 +305,17 @@ export function AdminPanel() {
         </div>
       )}
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
-        {[
-          ["待审核数量", stats.pending, "🐾"],
-          ["已公开数量", stats.approved, "✨"],
-          ["已隐藏数量", stats.hidden, "🌙"],
-          ["全部留言数量", stats.all, "📮"],
-        ].map(([label, value, icon]) => (
-          <div
-            key={label}
-            className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10"
-          >
-            <p className="text-sm font-bold text-orange-700 dark:text-orange-200">
-              {icon} {label}
-            </p>
-            <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">
-              {value}
-            </p>
-          </div>
-        ))}
-      </div>
-
       <div className="mb-6 flex flex-wrap gap-2 rounded-2xl border border-orange-100 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         {[
-          ["all", "全部"],
-          ["pending", "待审核"],
-          ["approved", "已公开"],
-          ["hidden", "已隐藏"],
+          ["guestbook", "留言审核"],
+          ["feedback", "反馈箱"],
         ].map(([value, label]) => (
           <button
             key={value}
             type="button"
-            onClick={() => setFilter(value as Filter)}
+            onClick={() => setTab(value as AdminTab)}
             className={
-              filter === value
+              tab === value
                 ? "rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-800 shadow-sm dark:bg-orange-300/20 dark:text-orange-100"
                 : "rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
             }
@@ -234,89 +325,166 @@ export function AdminPanel() {
         ))}
       </div>
 
-      <div className="space-y-5">
-        {filteredMessages.map((message) => {
-          const status = getReviewStatus(message);
-
-          return (
-            <article
-              key={message.id}
-              className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
-            >
-              <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-                <div className="flex gap-4">
-                  <UserAvatar
-                    avatarUrl={message.avatar_url}
-                    nickname={message.nickname ?? message.name}
-                  />
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-                        {message.nickname || message.name || "匿名猫友"}
-                      </h2>
-                      <span
-                        className={
-                          status === "approved"
-                            ? "rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-700 dark:bg-orange-300/20 dark:text-orange-200"
-                            : status === "hidden"
-                              ? "rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-200"
-                              : "rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700 dark:bg-rose-300/20 dark:text-rose-200"
-                        }
-                      >
-                        {status === "approved"
-                          ? "已公开"
-                          : status === "hidden"
-                            ? "已隐藏"
-                            : "待审核"}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                      {message.email || "邮箱未知"} ·{" "}
-                      {formatMessageTime(message.created_at)}
-                    </p>
-                    <p className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-300">
-                      「{message.message || "空白小纸条"}」
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex shrink-0 flex-wrap gap-2">
-                  <button
-                    type="button"
-                    disabled={isMutatingId === message.id}
-                    onClick={() => setApproved(message.id, true)}
-                    className="rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100"
-                  >
-                    通过
-                  </button>
-                  <button
-                    type="button"
-                    disabled={isMutatingId === message.id}
-                    onClick={() => setApproved(message.id, false)}
-                    className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200"
-                  >
-                    隐藏
-                  </button>
-                  <button
-                    type="button"
-                    disabled={isMutatingId === message.id}
-                    onClick={() => deleteMessage(message.id)}
-                    className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200"
-                  >
-                    删除
-                  </button>
-                </div>
+      {tab === "guestbook" ? (
+        <>
+          <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+            {[
+              ["待审核数量", stats.pending, "🐾"],
+              ["已公开数量", stats.approved, "✨"],
+              ["已隐藏数量", stats.hidden, "🌙"],
+              ["全部留言数量", stats.all, "📮"],
+            ].map(([label, value, icon]) => (
+              <div
+                key={label}
+                className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10"
+              >
+                <p className="text-sm font-bold text-orange-700 dark:text-orange-200">
+                  {icon} {label}
+                </p>
+                <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">
+                  {value}
+                </p>
               </div>
-            </article>
-          );
-        })}
-
-        {filteredMessages.length === 0 && (
-          <div className="rounded-2xl border border-orange-100 bg-white p-8 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            当前筛选下没有小纸条需要猫老板审批。
+            ))}
           </div>
-        )}
-      </div>
+
+          <div className="mb-6 flex flex-wrap gap-2 rounded-2xl border border-orange-100 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+            {[
+              ["all", "全部"],
+              ["pending", "待审核"],
+              ["approved", "已公开"],
+              ["hidden", "已隐藏"],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setFilter(value as Filter)}
+                className={
+                  filter === value
+                    ? "rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-800 shadow-sm dark:bg-orange-300/20 dark:text-orange-100"
+                    : "rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                }
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div className="space-y-5">
+            {filteredMessages.map((message) => {
+              const status = getReviewStatus(message);
+
+              return (
+                <article
+                  key={message.id}
+                  className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                >
+                  <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+                    <div className="flex gap-4">
+                      <UserAvatar
+                        avatarUrl={message.avatar_url}
+                        nickname={message.nickname ?? message.name}
+                      />
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+                            {message.nickname || message.name || "匿名猫友"}
+                          </h2>
+                          <span
+                            className={
+                              status === "approved"
+                                ? "rounded-full bg-orange-100 px-3 py-1 text-xs font-bold text-orange-700 dark:bg-orange-300/20 dark:text-orange-200"
+                                : status === "hidden"
+                                  ? "rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                                  : "rounded-full bg-rose-100 px-3 py-1 text-xs font-bold text-rose-700 dark:bg-rose-300/20 dark:text-rose-200"
+                            }
+                          >
+                            {status === "approved"
+                              ? "已公开"
+                              : status === "hidden"
+                                ? "已隐藏"
+                                : "待审核"}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                          {message.email || "邮箱未知"} ·{" "}
+                          {formatMessageTime(message.created_at)}
+                        </p>
+                        <p className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                          「{message.message || "空白小纸条"}」
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex shrink-0 flex-wrap gap-2">
+                      <button type="button" disabled={isMutatingId === message.id} onClick={() => setApproved(message.id, true)} className="rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100">通过</button>
+                      <button type="button" disabled={isMutatingId === message.id} onClick={() => setApproved(message.id, false)} className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200">隐藏</button>
+                      <button type="button" disabled={isMutatingId === message.id} onClick={() => deleteMessage(message.id)} className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200">删除</button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+
+            {filteredMessages.length === 0 && (
+              <div className="rounded-2xl border border-orange-100 bg-white p-8 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                当前筛选下没有小纸条需要猫老板审批。
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+            {[
+              ["待查看反馈数量", feedbackStats.pending, "📬"],
+              ["已回复反馈数量", feedbackStats.replied, "✉️"],
+              ["已处理反馈数量", feedbackStats.resolved, "✅"],
+              ["全部反馈数量", feedbackStats.all, "🗂️"],
+            ].map(([label, value, icon]) => (
+              <div key={label} className="rounded-2xl border border-orange-100 bg-orange-50/70 p-5 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10">
+                <p className="text-sm font-bold text-orange-700 dark:text-orange-200">{icon} {label}</p>
+                <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">{value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-5">
+            {feedback.map((item) => (
+              <article key={item.id} className="rounded-2xl border border-orange-100 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex gap-4">
+                    <UserAvatar avatarUrl={item.avatar_url} nickname={item.nickname} />
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{item.title}</h2>
+                        <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 dark:bg-orange-300/10 dark:text-orange-200">{feedbackTypeLabels[item.type]}</span>
+                        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-200">{feedbackStatusLabels[item.status]}</span>
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{item.nickname || "匿名猫友"} · {item.email || "邮箱未知"} · {formatMessageTime(item.created_at)}</p>
+                      <p className="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-300">{item.message}</p>
+                      {item.admin_reply && <p className="mt-3 rounded-2xl bg-orange-50 p-3 text-sm leading-relaxed text-orange-800 dark:bg-orange-300/10 dark:text-orange-100">当前回复：{item.admin_reply}</p>}
+                    </div>
+                  </div>
+
+                  <form onSubmit={(event) => replyFeedback(item.id, event)} className="w-full shrink-0 lg:w-80">
+                    <textarea value={replyDrafts[item.id] ?? ""} onChange={(event) => setReplyDrafts((drafts) => ({ ...drafts, [item.id]: event.target.value }))} rows={4} placeholder="给这条反馈写猫老板回复……" className="w-full resize-none rounded-2xl border border-orange-100 bg-orange-50/60 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-orange-300 focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <button type="submit" disabled={isMutatingId === item.id} className="rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-800 shadow-sm transition hover:bg-orange-200 disabled:opacity-60 dark:bg-orange-300/20 dark:text-orange-100">回复</button>
+                      <button type="button" disabled={isMutatingId === item.id} onClick={() => setFeedbackStatus(item.id, "resolved")} className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-200 disabled:opacity-60 dark:bg-slate-800 dark:text-slate-200">标记已处理</button>
+                      <button type="button" disabled={isMutatingId === item.id} onClick={() => deleteFeedback(item.id)} className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-200 disabled:opacity-60 dark:bg-rose-300/20 dark:text-rose-200">删除</button>
+                    </div>
+                  </form>
+                </div>
+              </article>
+            ))}
+
+            {feedback.length === 0 && (
+              <div className="rounded-2xl border border-orange-100 bg-white p-8 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900">反馈箱目前空空如也。</div>
+            )}
+          </div>
+        </>
+      )}
     </section>
   );
 }

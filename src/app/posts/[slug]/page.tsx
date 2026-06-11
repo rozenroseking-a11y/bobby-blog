@@ -4,6 +4,8 @@ import { getAllPosts, getPostBySlug } from "@/lib/api";
 import { CMS_NAME } from "@/lib/constants";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Alert from "@/app/_components/alert";
+import { ArticleComments } from "@/app/_components/article-comments";
+import { ArticleMetrics } from "@/app/_components/article-metrics";
 import Container from "@/app/_components/container";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
@@ -27,9 +29,11 @@ export default async function Post(props: Params) {
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}
+            category={post.category}
             date={post.date}
             author={post.author}
           />
+          <ArticleMetrics postSlug={post.slug} />
           <section className="max-w-3xl mx-auto mb-8 rounded-2xl border border-rose-100 bg-rose-50/70 p-6 shadow-sm dark:border-rose-300/20 dark:bg-rose-300/10">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               🐾 档案摘要
@@ -48,6 +52,7 @@ export default async function Post(props: Params) {
               本篇记录已阅。若有异议，请先提交一包冻干作为申诉材料。
             </p>
           </section>
+          <ArticleComments postSlug={post.slug} />
           <div className="max-w-3xl mx-auto mt-8">
             <Link
               href="/posts"

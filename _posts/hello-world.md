@@ -2,6 +2,7 @@
 title: "猫老板的午睡管理制度"
 excerpt: "为提升事务所运营质量，波比老板正式发布午睡管理制度，明确规定阳光地板、软垫和人类安静程度。"
 coverImage: "/bobby/bobby-off-duty.jpg"
+category: "午睡制度"
 date: "2026-06-08T13:30:00.000Z"
 author:
   name: 😴 午睡管理委员

@@ -1,18 +1,16 @@
 import Container from "@/app/_components/container";
+import { PageHeader } from "@/app/_components/page-header";
 import { AccountPanel } from "./account-panel";
 
 export default function AccountPage() {
   return (
     <main>
       <Container>
-        <section className="mt-16 mb-12 text-center md:text-left">
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight">
-            个人中心
-          </h1>
-          <p className="text-lg mt-5 text-slate-600 dark:text-slate-300">
-            整理你的猫猫事务所档案，昵称和头像都会用于留言展示。
-          </p>
-        </section>
+        <PageHeader
+          eyebrow="🗂️ 访客档案"
+          title="个人中心"
+          description="整理你的猫猫事务所档案，昵称和头像都会用于留言展示。"
+        />
         <section className="mb-20">
           <AccountPanel />
         </section>

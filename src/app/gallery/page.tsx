@@ -1,4 +1,5 @@
 import Container from "@/app/_components/container";
+import { PageHeader } from "@/app/_components/page-header";
 import Image from "next/image";
 
 const galleryItems = [
@@ -64,14 +65,11 @@ export default function GalleryPage() {
   return (
     <main>
       <Container>
-        <section className="mt-16 mb-12 text-center md:text-left">
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight">
-            波比相册
-          </h1>
-          <p className="text-lg mt-5 text-slate-600 dark:text-slate-300">
-            猫老板的营业记录、下班瞬间与朋友来访证据。
-          </p>
-        </section>
+        <PageHeader
+          eyebrow="📸 影像档案"
+          title="波比相册"
+          description="猫老板的营业记录、下班瞬间与朋友来访证据。"
+        />
 
         <section className="mb-10 rounded-2xl border border-orange-100 bg-orange-50/70 p-6 shadow-sm dark:border-orange-300/20 dark:bg-orange-300/10 md:p-8">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">

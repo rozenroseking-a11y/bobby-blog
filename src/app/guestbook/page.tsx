@@ -1,18 +1,16 @@
 import Container from "@/app/_components/container";
+import { PageHeader } from "@/app/_components/page-header";
 import { GuestbookClient } from "./guestbook-client";
 
 export default function GuestbookPage() {
   return (
     <main>
       <Container>
-        <section className="mt-16 mb-12 text-center md:text-left">
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight">
-            给波比老板投递小纸条 🐾
-          </h1>
-          <p className="text-lg mt-5 text-slate-600 dark:text-slate-300">
-            留言会先投递到猫老板的待审纸箱，审核通过后再公开展示。
-          </p>
-        </section>
+        <PageHeader
+          eyebrow="📮 小纸条投递处"
+          title="给波比老板投递小纸条"
+          description="留言会先投递到猫老板的待审纸箱，审核通过后再公开展示。"
+        />
 
         <GuestbookClient />
       </Container>

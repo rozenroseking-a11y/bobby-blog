@@ -1,4 +1,5 @@
 import Container from "@/app/_components/container";
+import { PageHeader } from "@/app/_components/page-header";
 import Image from "next/image";
 
 const friends = [
@@ -22,14 +23,11 @@ export default function FriendsPage() {
   return (
     <main>
       <Container>
-        <section className="mt-16 mb-12 text-center md:text-left">
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight">
-            猫猫朋友
-          </h1>
-          <p className="text-lg mt-5 text-slate-600 dark:text-slate-300">
-            波比事务所的来访嘉宾名单，主角仍然是猫老板波比。
-          </p>
-        </section>
+        <PageHeader
+          eyebrow="🐾 来访名单"
+          title="猫猫朋友"
+          description="波比事务所的来访嘉宾名单，主角仍然是猫老板波比。"
+        />
 
         <section className="grid grid-cols-1 gap-8 md:grid-cols-2 mb-20">
           {friends.map((friend) => (
